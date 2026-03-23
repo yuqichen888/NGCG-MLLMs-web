@@ -1,0 +1,201 @@
+---
+layout: ../layouts/Layout.astro
+title: "Cross-View Meets Diffusion: Aerial Image Synthesis With Geometry And Text Guidance"
+description: "Official webpage for the paper 'Cross-View Meets Diffusion: Aerial Image Synthesis With Geometry And Text Guidance'"
+favicon: favicon.svg
+thumbnail: screenshot.png
+---
+
+import Layout from "../layouts/Layout.astro";
+
+import Header from "../components/Header.astro";
+import Video from "../components/Video.astro";
+import HighlightedSection from "../components/HighlightedSection.astro";
+import SmallCaps from "../components/SmallCaps.astro";
+import Figure from "../components/Figure.astro";
+import Image from "../components/Image.astro";
+import TwoColumns from "../components/TwoColumns.astro";
+import YouTubeVideo from "../components/YouTubeVideo.astro";
+import LaTeX from "../components/LaTeX.astro";
+
+import outside from "../assets/outside.mp4";
+import demo from "../assets/demo.svg"
+import GPG2A from "../assets/model.svg"
+import samples from "../assets/samples.svg"
+import VIGORv2 from "../assets/data.svg"
+import results from "../assets/results.svg"
+import results2 from "../assets/results_2.svg"
+import results3 from "../assets/retrevied.svg"
+import Splat from "../components/Splat.tsx"
+
+import CodeBlock from "../components/CodeBlock.astro";
+import Table from "../components/Table.astro";
+export const components = {pre: CodeBlock, table: Table}
+
+<Header
+  title={frontmatter.title}
+  authors={[
+    {
+      name: "Ahmad Arrabi",
+      url: "https://ahmadarrabi.github.io",
+      notes: ["1†"],
+    },
+    {
+      name: "Xiaohan Zhang",
+      url: "https://zxh009123.github.io",
+      notes: ["1†"],
+    },
+    {
+      name: "Waqas Sultani",
+      url: "https://waqassultani.github.io/",
+      notes: ['2']
+    },
+    {
+      name: "Chen Chen",
+      url: "https://www.crcv.ucf.edu/chenchen/index.html",
+      notes: ['3']
+    },
+    {
+      name: "Safwan Wshah",
+      url: "https://www.wshahaigroup.com/",
+      notes: ["1*"],
+    },
+  ]}
+  insitute={[
+    {
+      symbol: "1",
+      text: "Vermont Artificial Intelligence", 
+    },
+  ]}
+  institutions={[
+    {
+      symbol: "1",
+      text: "Vermont Artificial Intelligence Lab, Department of Computer Science, University of Vermont",
+    },
+    {
+      symbol: "2",
+      text: "Intelligent Machines Lab, Information Technology University",
+    },
+    {
+      symbol: "3",
+      text: "Center for Research in Computer Vision, University of Central Florida",
+    },
+  ]}
+  conference="WACV 2025"
+  notes={[
+    {
+      symbol: "†",
+      text: "Equal contribution",
+    },
+    {
+      symbol: "*",
+      text: "Corresponding and senior author",
+    },
+  ]}
+  links={[
+    {
+      name: "Paper",
+      url: "https://openaccess.thecvf.com/content/WACV2025/html/Arrabi_Cross-View_Meets_Diffusion_Aerial_Image_Synthesis_with_Geometry_and_Text_WACV_2025_paper.html",
+      icon: "fa-solid:file-pdf",
+    },
+    {
+      name: "Code",
+      url: "https://github.com/AhmadArrabi/GPG2A",
+      icon: "mdi:github",
+    },
+    {
+      name: "arXiv",
+      url: "https://arxiv.org/abs/2408.04224",
+      icon: "academicons:arxiv",
+    },
+    {
+      name: "Demo",
+      url: "https://huggingface.co/spaces/ahmadarrabi/test_sketch",
+      icon: "logos:hugging-face-icon",
+    },
+  ]}
+  />
+
+<Figure
+    caption=""
+  >
+    <Image source={demo} altText=""/>
+</Figure>
+## Abstract
+
+<p style={{ textAlign: "justify" }}>Frequent high-quality aerial images are not always accessible due to their high effort and cost requirements. One solution is to use Ground-to-Aerial (G2A) image synthesis to generate aerial images from easily collectible ground images. G2A is rarely studied due to various challenges like the drastic view changes, occlusion, and limited range of visibility.  This paper presents a novel Geometric Preserving Ground-to-Aerial Image Synthesis (GPG2A) model that can generate realistic aerial images from ground images.  GPG2A consists of two stages, the first stage predicts the Bird’s Eye View (BEV) segmentation (referred to as the BEV layout map) from the ground image. The second stage synthesizes the aerial image from the predicted BEV layout map and text descriptions of the ground image. To train our model, we present a new multi-modal cross-view dataset, namely VIGORv2, built upon VIGOR. VIGORv2 introduces newly collected aerial images, layout maps, and text descriptions. Our experiments illustrate that GPG2A synthesizes better geometry-preserved aerial images than existing models. We also present two applications, data augmentation for cross-view geo-localization and sketch-based region search, to further verify the effectiveness of our GPG2A.</p>
+
+## Motivations 💡
+
+<p style={{ textAlign: "justify" }}>⭐ Aerial images offer high-resolution, detailed views that are valuable across various applications, unlike lower-resolution satellite images that are often obscured by clouds</p>
+<p style={{ textAlign: "justify" }}>⭐ Current aerial images are limited by the high effort and cost required to capture them, often captured by Unmanned Aerial Vehicles (UAVs) or drones </p>
+<p style={{ textAlign: "justify" }}>⭐ Ground images are far more available and cost-effective, especially in the recent advanced cars and autonomous vehicles, along with crowdsourcing platforms which get tons of daily uploads of street-view images </p>
+<p style={{ textAlign: "justify" }}>⭐ Thus, a promising cost-effective solution for aerial image collection is ground-to-aerial (G2A) image synthesis, which aims to generate more frequent aerial images from their corresponding ground views </p>
+
+## Model Overview
+
+<p style={{ textAlign: "jusftify" }}> GPG2A features a two-stage process: The first stage transforms the input ground image into a Bird’s Eye View (BEV) layout map estimate. The second stage leverages a pre-trained diffusion model (ControlNet), conditioned on the predicted BEV layout map from the first stage, to generate photo-realistic aerial images</p>
+
+<Figure
+    caption="GPG2A architecture"
+  >
+    <Image source={GPG2A} altText="Model architecture" width={950}/>
+</Figure>
+
+### Why Two stages? 🤔  
+<p style={{ textAlign: "justify" }}>⭐ The problem is simplified! reducing the domain gap between aerial and ground views</p>
+<p style={{ textAlign: "justify" }}>⭐ The BEV layout map explicitly preserves geometry correspondence between the views</p>
+<p style={{ textAlign: "justify" }}>⭐ Leverage strong pre-trained diffusion foundation models (stage II)</p>
+
+### Why add text? 🤔
+<p style={{ textAlign: "justify" }}>⭐ To further improve the synthesis quality and fuse surrounding information not fully represented in the BEV layout map! Such as block types (e.g., commercial or residential)</p>
+
+##
+
+## VIGORv2 🗺️
+
+<p style={{ textAlign: "justify" }}> VIGORv2 includes center-aligned aerial-ground image pairs, layout maps, and text descriptions of ground images. We cover 4 major US cities and apply a geographical train-test split as shown below</p>
+
+<Figure
+    caption="VIGORv2 geographic train-test split"
+  >
+    <Image source={VIGORv2} altText="VIGORv2 geographic train-test split" width={750}/>
+</Figure>
+
+<Figure
+    caption="VIGORv2 NewYork sample"
+  >
+    <Image source={samples} altText="VIGORv2 samples" width={750}/>
+</Figure>
+
+## Synthesis Results 🏞️
+We benchamark our model on VIGORv2 using the same- and cross-area protocols 
+<Figure
+    caption="Same-area sample results"
+  >
+    <Image source={results} altText="Results Samples"/>
+</Figure>
+
+<Figure
+    caption="Cross-area sample results"
+  >
+    <Image source={results2} altText="Results Samples"/>
+</Figure>
+
+
+## Application: Sketch-based Region Search 🕵️‍♂️
+Ever struggled to locate that perfect spot you can picture in your mind but just can't find? Using GPG2A, you can retrieve areas-of-interest from a rough hand-drawn sketch (mind-map) and a simple text description (prompt)
+
+✏️ **Sketch It:** Draw what you have in mind 
+
+🗣️ **Describe It:** Add a few words about the area 
+
+🔎 **Discover It:** GPG2A synthesizes a fake aerial image, and we find the closest match from a database of real aerial images  
+
+<Figure
+    caption="Sketch-based retrieval"
+  >
+    <Image source={results3} altText="Results Samples" width={500}/>
+</Figure>
+
+*NOTE: You can use the Huggingface demo provided in the title to generate fake images from sketches*
