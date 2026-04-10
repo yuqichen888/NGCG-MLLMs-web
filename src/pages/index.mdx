@@ -5,107 +5,137 @@ description: "Official webpage for the paper 'Turning Generators into Retrievers
 favicon: favicon.svg
 thumbnail: framework.png
 ---
+import Layout from "../layouts/Layout.astro";
+
 import Header from "../components/Header.astro";
+import Video from "../components/Video.astro";
 import HighlightedSection from "../components/HighlightedSection.astro";
+import SmallCaps from "../components/SmallCaps.astro";
 import Figure from "../components/Figure.astro";
 import Image from "../components/Image.astro";
-import CodeBlock from "../components/CodeBlock.astro";
-import Table from "../components/Table.astro";
+import TwoColumns from "../components/TwoColumns.astro";
+import YouTubeVideo from "../components/YouTubeVideo.astro";
+import LaTeX from "../components/LaTeX.astro";
 
 import framework from "../assets/framework.png"
 import clip from "../assets/clip_mllm.png"
 import results1 from "../assets/vis.png"
+import Splat from "../components/Splat.tsx"
 
+import CodeBlock from "../components/CodeBlock.astro";
+import Table from "../components/Table.astro";
 export const components = {pre: CodeBlock, table: Table}
 
 <Header
   title={frontmatter.title}
   authors={[
-    { name: "Yuqi Chen", url: "https://scholar.google.com/citations?user=zXe1SZYAAAAJ", notes: ["1"] },
-    { name: "Xiaohan Zhang", url: "https://zxh009123.github.io", notes: ["1"] },
-    { name: "Ahmad Arrabi", url: "https://ahmadarrabi.github.io", notes: ["1"] },
-    { name: "Waqas Sultani", url: "https://waqassultani.github.io/", notes: ['2'] },
-    { name: "Chen Chen", url: "https://www.crcv.ucf.edu/chenchen/index.html", notes: ['3'] },
-    { name: "Safwan Wshah", url: "https://www.wshahaigroup.com/", notes: ["1"] },
+    {
+      name: "Yuqi Chen",
+      url: "https://scholar.google.com/citations?user=zXe1SZYAAAAJ&hl=zh-CN", //TODO: add personal website link
+      notes: ["1"],
+    },
+    {
+      name: "Xiaohan Zhang",
+      url: "https://zxh009123.github.io",
+      notes: ["1"],
+    },
+    {
+      name: "Ahmad Arrabi",
+      url: "https://ahmadarrabi.github.io",
+      notes: ["1"],
+    },
+    {
+      name: "Waqas Sultani",
+      url: "https://waqassultani.github.io/",
+      notes: ['2']
+    },
+    {
+      name: "Chen Chen",
+      url: "https://www.crcv.ucf.edu/chenchen/index.html",
+      notes: ['3']
+    },
+    {
+      name: "Safwan Wshah",
+      url: "https://www.wshahaigroup.com/",
+      notes: ["1"],
+    },
+  ]}
+  insitute={[
+    {
+      symbol: "1",
+      text: "Vermont Artificial Intelligence", 
+    },
   ]}
   institutions={[
-    { symbol: "1", text: "Vermont AI Lab, University of Vermont" },
-    { symbol: "2", text: "Intelligent Machines Lab, Department of Artificial Intelligence, Information Technology University" },
-    { symbol: "3", text: "Institute of Artificial Intelligence, University of Central Florida" },
+    {
+      symbol: "1",
+      text: "Vermont Artificial Intelligence Lab, Department of Computer Science, University of Vermont",
+    },
+    {
+      symbol: "2",
+      text: "Intelligent Machines Lab, Information Technology University",
+    },
+    {
+      symbol: "3",
+      text: "Center for Research in Computer Vision, University of Central Florida",
+    },
   ]}
   conference="CVPR Findings Workshop 2026"
+  notes={[]}
   links={[
-    { name: "Paper", url: "#", icon: "fa-solid:file-pdf" },
-    { name: "Code", url: "https://github.com/yuqichen888/NGCG-MLLMs", icon: "mdi:github" },
-    { name: "arXiv", url: "#", icon: "academicons:arxiv" }
+    {
+      name: "Paper",
+      url: "", //TODO: add paper link
+      icon: "fa-solid:file-pdf",
+    },
+    {
+      name: "Code",
+      url: "https://github.com/yuqichen888/NGCG-MLLMs",
+      icon: "mdi:github",
+    },
+    {
+      name: "arXiv",
+      url: "", //TODO: add arXiv link
+      icon: "academicons:arxiv",
+    }
   ]}
-/>
+  />
 
-<main class="max-w-4xl mx-auto px-6 py-12 font-sans text-slate-900">
-  
-  {/* Abstract Section with Clear Focus */}
-  <section class="mb-20">
-    <h2 class="text-3xl font-bold border-b border-slate-200 pb-3 mb-6">Abstract</h2>
-    <p class="text-lg leading-relaxed text-slate-700 text-justify mb-4">
-      Natural-language Guided Cross-view Geo-localization (NGCG) retrieves geo-tagged satellite imagery using textual descriptions[cite: 10]. 
-      Traditional methods rely on dual-encoders that often struggle with generalization[cite: 11]. 
-    </p>
-    <p class="text-lg leading-relaxed text-slate-700 text-justify italic bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-      We present a framework to adapt MLLMs for retrieval via <strong>parameter-efficient finetuning</strong>[cite: 13]. 
-      Our method achieves SOTA on GeoText-1652 with a <strong>12.2% improvement</strong> in Recall@1.
-    </p>
-  </section>
+## Abstract
 
-  {/* Research Questions as a Professional Checklist */}
-  <section class="mb-20 bg-slate-50 p-8 rounded-2xl">
-    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-      <span class="text-blue-600">💡</span> Key Research Questions
-    </h2>
-    <ul class="grid md:grid-cols-2 gap-4">
-      <li class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 italic">How does parameter scale affect performance? [cite: 20]</li>
-      <li class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 italic">Optimal sequence embedding aggregation? [cite: 21]</li>
-      <li class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 italic">FFT vs. LoRA-based adaptation? [cite: 22]</li>
-      <li class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 italic">Hyperparameter influence? [cite: 23]</li>
-    </ul>
-  </section>
+<p style={{ textAlign: "justify" }}>Natural-language Guided Cross-view Geo-localization (NGCG) aims to retrieve geo-tagged satellite imagery using textual descriptions of ground scenes. While recent NGCG methods commonly rely on CLIP-style dual-encoder architectures, they often suffer from weak cross-modal generalization and require complex architectural designs. In contrast, Multimodal Large Language Models (MLLMs) offer powerful semantic reasoning capabilities but are not directly optimized for retrieval tasks. In this work, we present a simple yet effective framework to adapt MLLMs for NGCG via parameter-efficient finetuning. Our approach optimizes latent representations within the MLLM while preserving its pretrained multimodal knowledge, enabling strong cross-modal alignment without redesigning model architectures. Through systematic analysis of diverse variables, from model backbone to feature aggregation, we provide practical and generalizable insights for leveraging MLLMs in NGCG. Our method achieves SOTA on GeoText-1652 with a 12.2\% improvement in Text-to-Image Recall@1 and secures top performance in 5 out of 12 subtasks on CVG-Text, all while surpassing baselines with far fewer trainable parameters. These results position MLLMs as a robust foundation for semantic cross-view retrieval and pave the way for MLLM-based NGCG to be adopted as a scalable, powerful alternative to traditional dual-encoder designs. Project page and code are available at https://yuqichen888.github.io/NGCG-MLLMs-web/.</p>
 
-  {/* Visual Comparison Section */}
-  <section class="mb-20 text-center">
-    <h2 class="text-3xl font-bold border-b border-slate-200 pb-3 mb-10 text-left">Methodology</h2>
-    <Figure caption="Transitioning from CLIP-style Dual-Encoders to our Unified MLLM Framework[cite: 46].">
-      <Image source={clip} altText="Model architecture comparison" class="rounded-xl shadow-lg border border-slate-100" />
-    </Figure>
-    
-    <div class="mt-12 text-left">
-      <h3 class="text-2xl font-semibold mb-4 text-slate-800 italic">Core Contributions 🤔</h3>
-      <div class="space-y-4 text-slate-700">
-        <p><strong>1. MLLM Adaptation:</strong> End-to-end parameter-efficient approach preserving reasoning ability while enabling retrieval[cite: 48].</p>
-        <p><strong>2. Systematic Insights:</strong> Revealed best practices for backbone scale and tuning configurations[cite: 49, 50].</p>
-        <p><strong>3. SOTA Performance:</strong> 25.8% Recall@1 on GeoText-1652, outperforming prior methods[cite: 51].</p>
-      </div>
-    </div>
-  </section>
+## Key Research Questions 💡
 
-  {/* Framework Details */}
-  <section class="mb-20">
-     <Figure caption="Our framework leverages LoRA and InfoNCE loss to align MLLM representations for geo-localization[cite: 81, 82].">
-      <Image source={framework} altText="Detailed framework diagram" class="rounded-xl" />
-    </Figure>
-  </section>
+<p style={{ textAlign: "justify" }}>⭐ How does the parameter scale of the MLLM backbones affect NGCG performance?</p>
+<p style={{ textAlign: "justify" }}>⭐ What is the best way to aggregate sequence embeddings to capture cross-view scene semantics?</p>
+<p style={{ textAlign: "justify" }}>⭐ Which tuning strategy is optimal? Specifically, Full Fine-Tuning (FFT) versus LoRA-based adaptation?</p>
+<p style={{ textAlign: "justify" }}>⭐ How do the hyperparameter configurations of the parameter-efficient module (e.g., LoRA) influence adaptation performance?</p>
+<p style={{ textAlign: "justify" }}>⭐ How do design choices within the contrastive learning objective influence the discriminative capability and stability of the learned embeddings?</p>
 
-  {/* Results Visualization */}
-  <section class="mb-20">
-    <h2 class="text-3xl font-bold border-b border-slate-200 pb-3 mb-8 italic">Visual Results</h2>
-    <div class="bg-white p-4 rounded-2xl shadow-md border border-slate-100">
-      <Figure caption="Top-3 retrieval samples using natural language queries[cite: 84, 85, 86].">
-        <Image source={results1} altText="Retrieval results" class="w-full h-auto" />
-      </Figure>
-    </div>
-  </section>
+## Model Overview
 
-</main>
+<p style={{ textAlign: "jusftify" }}> Old Clip-style methods vs ours</p>
 
-<style>
-  html { scroll-behavior: smooth; }
-  strong { color: #1e40af; }
-</style>
+<Figure
+    caption="Comparison between the CLIP-style Dual-Encoder Architecture and Our Unified MLLM Framework."
+  >
+    <Image source={clip} altText="Model architecture" width={950}/>
+</Figure>
+
+### Contributions 🤔  
+<p style={{ textAlign: "justify" }}>⭐ We Explore MLLMs for the Natural-language Guided Cross-view Geo-localization (NGCG). We study an end-to-end parameter-efficient adaptation approach that preserves the conversation and reasoning ability of MLLMs, while enabling discriminative cross-modal retrieval.</p>
+<p style={{ textAlign: "justify" }}>⭐ We systematically explore key factors, including backbone scale, feature aggregation, and fine-tuning configurations. And we reveal practical insights and best practices for effectively adapting MLLMs to the NGCG task.</p>
+<p style={{ textAlign: "justify" }}>⭐ Our approach achieves a Recall@1 of 25.8\% on GeoText-1652 and 5 best out of 12 subtasks on CVG-Text, outperforming prior NGCG methods and demonstrating the effectiveness of parameter-efficient MLLM adaptation. </p>
+
+<Figure
+    caption="The framework leverages a pre-trained MLLM for feature encoding, processing both text and visual data via its shared weight design. The adaptation framework relies on LoRA, combined with an InfoNCE loss function, to align the MLLM’s internal representation space for the NGCG retrieval task."
+  >
+    <Image source={framework} altText="framework" width={750}/>
+</Figure>
+
+<Figure
+    caption="results visualization"
+  >
+    <Image source={results1} altText="retreival samples" width={750}/>
+</Figure>
