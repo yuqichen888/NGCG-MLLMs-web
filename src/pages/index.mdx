@@ -115,16 +115,13 @@ export const components = {pre: CodeBlock, table: Table}
 
 ## Model Overview
 
-
-<Figure
-    caption="Comparison between the CLIP-style Dual-Encoder Architecture and Our Unified MLLM Framework."
-  >
+## Comparison between the CLIP-style Dual-Encoder Architecture and Our Unified MLLM Framework.
+<Figure>
     <Image source={clip} altText="Model architecture" width={750}/>
 </Figure>
 
-<Figure
-    caption="Our framework leverages a pre-trained MLLM for feature encoding, processing both text and visual data via its shared weight design. The adaptation framework relies on LoRA, combined with an InfoNCE loss function, to align the MLLM’s internal representation space for the NGCG retrieval task."
-  >
+## Model Overview
+<Figure>
     <Image source={framework} altText="framework" width={750}/>
 </Figure>
 
