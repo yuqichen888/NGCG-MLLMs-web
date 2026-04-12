@@ -115,12 +115,17 @@ export const components = {pre: CodeBlock, table: Table}
 
 ## Model Overview
 
-<p style={{ textAlign: "jusftify" }}> Old Clip-style methods vs ours</p>
 
 <Figure
     caption="Comparison between the CLIP-style Dual-Encoder Architecture and Our Unified MLLM Framework."
   >
-    <Image source={clip} altText="Model architecture" width={950}/>
+    <Image source={clip} altText="Model architecture" width={750}/>
+</Figure>
+
+<Figure
+    caption="Our framework leverages a pre-trained MLLM for feature encoding, processing both text and visual data via its shared weight design. The adaptation framework relies on LoRA, combined with an InfoNCE loss function, to align the MLLM’s internal representation space for the NGCG retrieval task."
+  >
+    <Image source={framework} altText="framework" width={750}/>
 </Figure>
 
 ### Contributions 🤔  
@@ -128,14 +133,10 @@ export const components = {pre: CodeBlock, table: Table}
 <p style={{ textAlign: "justify" }}>⭐ We systematically explore key factors, including backbone scale, feature aggregation, and fine-tuning configurations. And we reveal practical insights and best practices for effectively adapting MLLMs to the NGCG task.</p>
 <p style={{ textAlign: "justify" }}>⭐ Our approach achieves a Recall@1 of 25.8\% on GeoText-1652 and 5 best out of 12 subtasks on CVG-Text, outperforming prior NGCG methods and demonstrating the effectiveness of parameter-efficient MLLM adaptation. </p>
 
-<Figure
-    caption="The framework leverages a pre-trained MLLM for feature encoding, processing both text and visual data via its shared weight design. The adaptation framework relies on LoRA, combined with an InfoNCE loss function, to align the MLLM’s internal representation space for the NGCG retrieval task."
-  >
-    <Image source={framework} altText="framework" width={750}/>
-</Figure>
+
 
 <Figure
-    caption="results visualization"
+    caption="Results Visualization"
   >
     <Image source={results1} altText="retreival samples" width={750}/>
 </Figure>
